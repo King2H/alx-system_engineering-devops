@@ -1,13 +1,6 @@
-ble the user holberton to login and open files without error.
+# puppet allow user and expand file descriptor limit
 
-# Increase hard file limit for Holberton user.
-exec { 'increase-hard-file-limit-for-holberton-user':
-  command => 'sed -i "/holberton hard/s/5/50000/" /etc/security/limits.conf',
-  path    => '/usr/local/bin/:/bin/'
-}
-
-# Increase soft file limit for Holberton user.
-exec { 'increase-soft-file-limit-for-holberton-user':
-  command => 'sed -i "/holberton soft/s/4/50000/" /etc/security/limits.conf',
-  path    => '/usr/local/bin/:/bin/'
+file {'/etc/security/limits.conf':
+  ensure  => present,
+  content => "session required pam_limits.so\nholberton hard nofile 5000\nholberton soft nofile 4000",
 }
